@@ -1,0 +1,23 @@
+<?php
+            $motherCat = get_queried_object();
+
+            // getting post ids that are assigned to current taxonomy term
+            $destination_post_IDs = get_posts(array(
+                'post_type' => 'accommodation_item',
+                'posts_per_page' => -1,
+                'tax_query' => array(
+                    array(
+                        'taxonomy' => 'property_category',
+                        'field' => 'slug',
+                        'terms' => $motherCat->slug
+                    )
+                ),
+                'fields' => 'ids'
+            ));
+            ?>
+
+
+
+            <?php
+            // getting the terms of 'building_filter', which are assigned to these posts
+            $building_filters = wp_get_object_terms($destination_post_IDs, 'building_filter'); ?>
